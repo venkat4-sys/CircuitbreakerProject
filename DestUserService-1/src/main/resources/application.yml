@@ -1,0 +1,26 @@
+server:
+  port: 9999
+  
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  health:
+    circuitbreakers:
+      enabled: true
+resilience4j:
+  circuitbreaker:
+    instances:
+      getStudentInfo:
+        automatic-transition-from-open-to-half-open-enabled: true
+        failure-rate-threshold: 60
+        minimum-number-of-calls: 6
+        permitted-number-of-calls-in-half-open-state: 2
+        register-health-indicator: true
+        sliding-window-size: 10
+        sliding-window-type: COUNT_BASED
+        wait-duration-in-open-state: 3s
